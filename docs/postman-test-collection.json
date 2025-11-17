@@ -1,0 +1,259 @@
+{
+  "info": {
+    "name": "ZulaRides API Tests",
+    "description": "Postman collection for testing ZulaRides backend routes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5002/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5002",
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "Wallet Top-up",
+      "item": [
+        {
+          "name": "Initiate Top-up",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 500,\n  \"paymentMethod\": \"credit_card\",\n  \"paymentProvider\": \"paystack\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5002/api/wallet/topup/initiate",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5002",
+              "path": ["api", "wallet", "topup", "initiate"]
+            }
+          }
+        },
+        {
+          "name": "Process Top-up",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentStatus\": \"completed\",\n  \"transactionId\": \"TXN_123456789\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5002/api/wallet/topup/{{topup_id}}/process",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5002",
+              "path": ["api", "wallet", "topup", "{{topup_id}}", "process"]
+            }
+          }
+        },
+        {
+          "name": "Get Top-up History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5002/api/wallet/topup/history",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5002",
+              "path": ["api", "wallet", "topup", "history"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Feedback",
+      "item": [
+        {
+          "name": "Submit Feedback",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rideId\": \"{{ride_id}}\",\n  \"rating\": 5,\n  \"comment\": \"Excellent service!\",\n  \"feedbackType\": \"to_driver\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5002/api/feedback",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5002",
+              "path": ["api", "feedback"]
+            }
+          }
+        },
+        {
+          "name": "Get Feedback",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5002/api/feedback",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5002",
+              "path": ["api", "feedback"]
+            }
+          }
+        },
+        {
+          "name": "Get Driver Feedback",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5002/api/feedback/driver/{{driver_id}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5002",
+              "path": ["api", "feedback", "driver", "{{driver_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ride History",
+      "item": [
+        {
+          "name": "Get User Ride History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5002/api/ride-history/user",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5002",
+              "path": ["api", "ride-history", "user"]
+            }
+          }
+        },
+        {
+          "name": "Get Driver Ride History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5002/api/ride-history/driver",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5002",
+              "path": ["api", "ride-history", "driver"]
+            }
+          }
+        },
+        {
+          "name": "Get Ride Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5002/api/ride-history/statistics",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "5002",
+              "path": ["api", "ride-history", "statistics"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Debug Routes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5002/api/debug-routes",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5002",
+          "path": ["api", "debug-routes"]
+        }
+      }
+    }
+  ]
+}
